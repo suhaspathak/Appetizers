@@ -1,0 +1,5 @@
+#  <#Title#>
+opt_in_rules:
+    - indentation_width
+    - explicit_self
+    - operator_usage_whitespace
