@@ -17,8 +17,14 @@ struct ActivityIndicator: UIViewRepresentable {
     
     func updateUIView(_ uiView: UIActivityIndicatorView, context: Context) {
     }
-    
-   
-    
-    
+}
+
+struct LoadingView: View {
+    var body: some View {
+        ZStack {
+            Color(.systemBackground)
+                .edgesIgnoringSafeArea(.all)
+            ActivityIndicator()
+        }
+    }
 }
