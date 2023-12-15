@@ -10,17 +10,24 @@ import SwiftUI
 struct AppetizerListView: View {
     
     @StateObject var viewModel = AppetizerListViewModel()
+    @State var selectedAppetizer: Appetizer?
     
     var body: some View {
         ZStack {
             NavigationView {
                 List(viewModel.appetizers) { appetizer in
                     AppetizerListCell(appetizer: appetizer)
+                        .onTapGesture {
+                            selectedAppetizer = appetizer
+                        }
                 }
                 .navigationTitle("🍟 Appetizer")
             }
             .onAppear {
                 viewModel.getAppetizers()
+            }
+            if let selectedAppetizer = selectedAppetizer {
+            AppetizersDetalsView(appetizer: selectedAppetizer)
             }
             if viewModel.isLoading {
                 LoadingView()
