@@ -8,9 +8,16 @@
 import SwiftUI
 
 struct AccountView: View {
+    
+    @State private var firstName = ""
     var body: some View {
         NavigationView {
-            Text("Account View")
+            Form {
+                Section(header: Text("Personal Info")) {
+                    TextField("First Name", text: $firstName)
+                }
+               
+            }
                 .navigationTitle("📞 Accounts")
         }
     }
