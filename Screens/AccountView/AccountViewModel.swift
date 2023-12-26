@@ -12,8 +12,35 @@ final class AccountViewModel: ObservableObject {
     @AppStorage("userDetail") private var userDetailData: Data?
     
     @Published var userDetail = UserDetail()
-    
     @Published var alertItem: AlertItem?
+    
+    
+    func saveChanges() {
+        guard isValidForm else {
+            return
+        }
+        
+        do {
+            let data =  try JSONEncoder().encode(userDetail)
+            userDetailData = data
+            alertItem = AlertContext.userSaveSuccess
+        } catch  {
+            alertItem = AlertContext.invalidUserData
+        }
+        
+        print("Changes have been saved successfully");
+    }
+    
+    func retrieveUser() {
+        
+        guard let userData = userDetailData else { return }
+        
+        do {
+            userDetail =  try JSONDecoder().decode(UserDetail.self, from: userData)
+        } catch  {
+            alertItem = AlertContext.invalidUserData
+        }
+    }
     
     var isValidForm: Bool {
         
@@ -30,20 +57,4 @@ final class AccountViewModel: ObservableObject {
         return true
     }
     
-    
-    func saveChanges() {
-        guard isValidForm else {
-            return
-        }
-        
-        do {
-            let data =  try JSONEncoder().encode(userDetail)
-            userDetailData = data
-            alertItem = AlertContext.userSaveSuccess
-        } catch  {
-            alertItem = AlertContext.invaliUserData
-        }
-        
-        print("Changes have been saved successfully");
-    }
 }

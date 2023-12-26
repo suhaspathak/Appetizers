@@ -39,12 +39,16 @@ struct AccountView: View {
                 
             }
             .navigationTitle("📞 Accounts")
+        }
+            .onAppear {
+                viewModel.retrieveUser()
+            }
             .alert(item: $viewModel.alertItem) { alertItem in
                 Alert(title: alertItem.title,
                       message: alertItem.message,
                       dismissButton: alertItem.dismissButton)
                 
-            }
+            
         }
     }
 }
