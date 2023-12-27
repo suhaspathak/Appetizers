@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OrderView: View {
     
-    @State private var orderItems = MackData.OrderItems
+    @EnvironmentObject var order: Order
     
     
     var body: some View {
@@ -17,11 +17,11 @@ struct OrderView: View {
             ZStack {
                 VStack {
                     List {
-                        ForEach(orderItems) { appetizer in
+                        ForEach(order.items) { appetizer in
                             AppetizerListCell(appetizer: appetizer)
                         }
                         .onDelete(perform: { indexSet in
-                            deleteItem(at: indexSet)
+                            order.deleteItem(at: indexSet)
                         })
                     }
                     .listStyle(.plain)
@@ -29,21 +29,17 @@ struct OrderView: View {
                     Button {
                         
                     } label: {
-                        APButton(title: "$99.99 - Place Order")
+                        APButton(title: "$\(order.totolPrice, specifier: "%.2f") - Place Order")
                     }
                     .padding(.bottom, 25)
                 }
                 
-                if orderItems.isEmpty {
+                if order.items.isEmpty {
                     EmptyStateView(imageName: "empty-order", message: "You have no order.\nPlease add an appetizer!")
                 }
             }
                 .navigationTitle("🧾 Orders")
         }
-    }
-    
-    func deleteItem(at offsets: IndexSet) {
-        orderItems.remove(atOffsets: offsets)
     }
 }
 
