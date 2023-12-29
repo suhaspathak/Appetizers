@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+enum FormTextField {
+    case firstName, lastName, email
+}
+
 final class AccountViewModel: ObservableObject {
     
     @AppStorage("userDetail") private var userDetailData: Data?
